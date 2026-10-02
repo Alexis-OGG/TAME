@@ -12,7 +12,6 @@ class imageDoc(str, Enum):
     ORANGE: str= "img/doc_orange.png"
     GRIS: str= "img/doc_gris.png"
 
-
 class PresentationData(BaseModel):
 
     titre_presentation: str = Field(
@@ -43,6 +42,12 @@ class PresentationData(BaseModel):
         """
     )
 
+    id_semaine_debut: Optional[int] = Field(ge=1,
+            le=52,
+                description="""
+                numéro de la semaine de début du projet (voir planning)
+                """
+            )
     Annee: str = Field(
         description="""
         Annee
@@ -63,7 +68,7 @@ class PresentationData(BaseModel):
 
     id_projet: str = Field(
         description="""
-        Référence projet interne ou client.
+        Référence projet interne. Format: Suite de chiffres. Exemple : 001359
 
         """
     )
@@ -138,7 +143,7 @@ class Hypothese(BaseModel):
 class SubTache(BaseModel):
     nom : str = Field(description="Nom de la sous tâche. Identifiable dans la feuille 'Objectgifs Etudes' avec un * ")
     duree : float = Field(description="duree de la sous tâche")
-    debut : float = Field(description="Début de la sous tâche en id de la semaine depuis T0")
+    debut : float = Field(ge=0,description="Début de la sous tâche en id de la semaine depuis T0.")
     jalon : Optional[List[float]] = Field(description="Id de la semaine du Jalon de la sous tâche")
     couleur : str = Field (description= """
         Couleur barre gantt.
@@ -150,8 +155,8 @@ class SubTache(BaseModel):
 class Lot(BaseModel):
     phase: str = Field(
         description="""
-        Phase auquel appartient le lot.
-        Exemple : Phase 1 : Prototype
+        Phase auquel appartient le lot. Liste des type de phases : POC, Prototype A, Prototype Q, Industrialisation, Clôture Projet
+        Exemple : Phase 2 : Prototype A
         """
     )
     
@@ -196,10 +201,10 @@ class Lot(BaseModel):
     #     Exemple : {"LOTS": "LOT 1", "ACTIVITÉS": "Développement", "PRIX": "5000 €"}
     #     """
     # )
-    debut:float=Field(description="Début du lot en id de la semaine depuis T0")
+    debut:float=Field(ge=0.0,description="Début du lot en id de la semaine depuis T0. Commence à 0 pour le premier lot. Source : Planning ou Gantt")
 
     duree : float = Field(description="""
-        Nombres de semaines estimer pour réaliser ce lot
+        Nombres de semaines estimer pour réaliser ce lot. Prends en compte les semaines de fermeture
     """)
 
     jalon:Optional[List[float]] = Field(description="Id de la semaine du Jalon")
@@ -212,7 +217,7 @@ class Lot(BaseModel):
                 facturation du Lot
     """)
 
-    sous_tache: Optional[List[SubTache]]
+    sous_tache: List[SubTache]
 
 
 
