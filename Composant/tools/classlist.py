@@ -41,7 +41,7 @@ class main(BaseModel):
         Fiche_Technique : str  = Field(description="url de la fich technique")
         Equivalents_Suggeres: list[str]  = Field(description="liste de composants équivalents")
         Statut_Global: StatutGlobal = Field(description="Informations globales sur le statut ")
-        Offres_Disponibles: list[Offres] = Field(description="liste des offres composants : stock en fonction conditionnement")
+        # Offres_Disponibles: list[Offres] = Field(description="liste des offres composants : stock en fonction conditionnement")
 
 class ResultFabProduct(BaseModel):
     techniques : list[Tech]

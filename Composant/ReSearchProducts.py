@@ -1,52 +1,164 @@
 #Modules Outils
-from tools.API_Distrib import get_digikey_token
-from tools.Find_Equiv import Recherche_eq_gen,Recherche_substitut_digikey
-from tools.build_liste_comp import build_unified_json,analyse_liste
+from tools.build_liste_comp import analyse_liste
 from tools.export_excel import exporter_excel
 from tools.classlist import ResultAllProduct,ErreurMsg
+from ressources.create_ressources import ComponentType,FamilyType
+
+#Librairies
 from dotenv import load_dotenv
-import json
+from sqlalchemy import select,create_engine
+from sqlalchemy.orm import Session,aliased
+
+from docling.datamodel.pipeline_options import (PdfPipelineOptions)
+from docling.document_converter import DocumentConverter, PdfFormatOption
+from docling.datamodel.base_models import InputFormat
+from pathlib import Path
+import os
+from curl_cffi import requests
 
 from mcp.server import MCPServer
-from typing import Annotated, Literal
+from typing import Annotated
 from pydantic import Field
+
 
 mcp = MCPServer("BOM_Tools")
 load_dotenv()
+import os
 
+global_doc_converter = None
 
+def charger_modeles_docling():
+    global global_doc_converter
+    if global_doc_converter is None:
+      pipeline_options = PdfPipelineOptions()
+      pipeline_options.do_ocr = False
+      pipeline_options.artifacts_path = Path("./docling_models")
+      pipeline_options.do_table_structure = True
+      
+      global_doc_converter = DocumentConverter(
+          format_options={
+              InputFormat.PDF: PdfFormatOption(
+                  pipeline_options=pipeline_options
+              )
+          }
+      )
+    return global_doc_converter
+@mcp.tool(
+  name="Analyse_BOM",
+  title="Analyseur de BOM",
+  description="Analyse une liste de composants et renvoie les informations importantes: disponibilité, aspects techniques, prix, normes,",
+  structured_output=True,
+    
+)
+def Analyse_BOM(
+  liste :Annotated[list[str],Field(description="""Liste de composants; Exemlple : ["3039","CR2477N","C0603C103K4RACTU"]""")]
+  )-> dict[str,ResultAllProduct]|ErreurMsg:
+  try:
+    resultats = analyse_liste(liste,True,True)
+    
+    return resultats
+  except Exception as e:
+    return ErreurMsg(erreur_message= f"Analyse de BOM échoué : {e}")
 
 @mcp.tool(
-    name="Analyse_BOM",
-    title="Analyseur de BOM",
-    description="Analyse une liste de composants et renvoie les informations importantes: disponibilité, aspects techniques, prix, normes,",
-    structured_output=True,
+  name= "Read_page_Datasheet",
+  title = "Lire Page datasheet",
+  description="Lire une page d'une datasheet d'un composant à partir de l'url de la fich technique et du numéro de la page à lire."
+)
+def lire_datasheet(reference:str,url:str,numero_page:int):
+  pdf_filepath=f"files/{reference}.pdf"
+  if not(os.path.isfile(pdf_filepath)):
+    try : 
+      response = requests.get(url, impersonate="chrome110", timeout=15)
+      if response.status_code == 200:
+        content_type = response.headers.get("Content-Type", "")
     
-  )
-def Analyse_BOM(
-        liste :Annotated[list[str],Field(description="""Liste de composants; Exemlple : ["3039","CR2477N","C0603C103K4RACTU"]""")]
-   )-> dict[str,ResultAllProduct]|ErreurMsg:
-    try:
-      resultats = analyse_liste(liste,True,True)
-      return resultats
+        if "application/pdf" in content_type.lower() or "application/octet-stream" in content_type.lower():
+              with open(pdf_filepath, "wb") as file:
+                  file.write(response.content)
+        else:
+                  return f"Erreur : Le pare-feu bloque toujours. Type reçu : {content_type[:50]}..."
+      else:
+          return f"Erreur lors du téléchargement du fichier : Code HTTP {response.status_code}"
     except Exception as e:
-      return ErreurMsg(erreur_message= f"Analyse de BOM échoué : {e}")
+          return f"Erreur lors du téléchargement du fichier : {str(e)}"
+  try:
+      result = charger_modeles_docling().convert(pdf_filepath,page_range=(numero_page, numero_page))
+      markdown_text = result.document.export_to_markdown()
+      return markdown_text
+  except Exception as e:
+      return f"Erreur lors de la lecture du fichier PDF : {str(e)}"
 
-# @mcp.tool(
-#     name="Export_data",
-#     title="Exportez Analyse BOM",
-#     description="Export au foramt excel l'analyse de la BOM",
-#     structured_output=True
-#   )
-# def export_data_BOM():
-#   pass
+@mcp.resource("users://list/{family}/{sub_family}")
+def get_champs_sub_family(family: str,sub_family:str) -> str:
+  engine = create_engine("sqlite:///Components_db")
+  session = Session(engine)
+  
+  #Case sub_family
+  family_alias = aliased(FamilyType)
+  stmt = select(ComponentType.champs1,ComponentType.champs2,ComponentType.champs3,ComponentType.champs4,ComponentType.champs5,ComponentType.champs6,ComponentType.champs7,ComponentType.champs8,ComponentType.champs9,ComponentType.champs10).join(family_alias,ComponentType.family_id == family_alias.id).where(family_alias.name == family).where(ComponentType.name == sub_family)
+  query= session.execute(stmt).one()
+  if query!=[]:
+    response = ""
+    for i in range(10):
+        response += f"Champs{i+1} = {getattr(query,f"champs{i+1}")}\n"
+    return response
+  else :
+      return f"Mauvais Arguments"
+      
+@mcp.resource("users://list/{family}")
+def get_sub_families(family: str) -> str:
+  engine = create_engine("sqlite:///Components_db")
+  session = Session(engine)
+  #Case sub_families
+  if family :
+    family_alias = aliased(FamilyType)
+    stmt = select(ComponentType.name).join(family_alias,ComponentType.family_id == family_alias.id).where(family_alias.name == family)
+    query= session.execute(stmt).all()
+    response = ""
+    for item in query:
+        response += f"{item.name}\n"
+    return(response)
+  else :
+    return "Mauvais Arguments"
 
-if __name__ == "__main__":
-    test =  Analyse_BOM([
-  "CR2477N",
-  "C0603C103K4RACTU"
-])
-    print(json.dumps(test, indent=2, ensure_ascii=False))
+@mcp.resource("users://list}")
+def get_families() -> str:
+  engine = create_engine("sqlite:///Components_db")
+  session = Session(engine)
+  stmt = select(FamilyType.name)
+  query= session.execute(stmt).all()
+  response = ""
+  for item in query:
+    response += f"{item.name}\n"
+  return(response)
+
+@mcp.tool(
+    name="Export_data",
+    title="Exportez Analyse BOM",
+    description="Export au foramt excel l'analyse de la BOM",
+  )
+def export_data_BOM(analyse:dict[str,ResultAllProduct]):
+  return exporter_excel(analyse)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#     test =  Analyse_BOM([
+#   "CR2477N",
+#   "C0603C103K4RACTU"
+# ])
+#     print(json.dumps(test, indent=2, ensure_ascii=False))
     # print(test)
     #     bruh = exporter_excel({PIC32CM6408PL10028-E/SS 
     # test = query_digikey_sub("BAS116T,115",get_digikey_token())

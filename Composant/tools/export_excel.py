@@ -1,8 +1,10 @@
 from openpyxl.styles import Alignment, PatternFill, Font
 import pandas as pd
 import io
+from tools.classlist import ResultAllProduct
+import base64
 
-def exporter_excel(resultats:dict):
+def exporter_excel(resultats:dict[str,ResultAllProduct]):
     lignes_excel_offres = [] 
     lignes_excel_technique = []
 
@@ -13,42 +15,42 @@ def exporter_excel(resultats:dict):
                 continue
                 
             # ref = produit.get("REF_FAB", "")
-            fab = produit["main"].get("Fabricant", "")
-            consensus = produit["main"].get("Statut_Global", {}).get("Consensus", "")
-            conflit = produit["main"].get("Statut_Global", {}).get("Alerte_Conflit", False)
-            detail_conflit = produit["main"].get("Statut_Global", {}).get("Details_Distributeurs",{})
-            datasheet = produit["main"].get("Fiche_Technique", "")
+            fab = produit.main.Fabricant
+            consensus = produit.main.Statut_Global.Consensus or ""
+            conflit = produit.main.Statut_Global.Alerte_Conflit or False
+            detail_conflit = produit.main.Statut_Global.Details_Distributeurs or {}
+            datasheet = produit.main.Fiche_Technique or ""
 
-            for ref_fab, donnees in produit.items():
+            for ref_fab, donnees in produit.liste_products.items():
                 if ref_fab =="main":
                     continue
-                technique=produit[ref_fab]["techniques"]
+                technique=produit.liste_products.get(ref_fab,{}).techniques or []
                 lignes_excel_technique.append({
                     "REF": ref,
                     "Fabricant": fab,
                     "Statut Global": consensus,
                     "REF_Fab" : ref_fab,
-                    "Température de fonctionnement":technique[0].get("Temp_fonc"),
-                    "Température de stockage":technique[0].get("Temp_stock"),
-                    "Humidité":technique[0].get("humidity"),
-                    "Status Rohs":technique[0].get("Rohs"),
-                    "Statut Reach":technique[0].get( "Reach"),
-                    "Boîtier":technique[0].get("boitier"),
-                    "Dimensions":technique[0].get("Dimensions"),
+                    "Température de fonctionnement":technique[0].Temp_fonc,
+                    "Température de stockage":technique[0].Temp_stock,
+                    "Humidité":technique[0].humidity,
+                    "Status Rohs":technique[0].Rohs,
+                    "Statut Reach":technique[0].Reach,
+                    "Boîtier":technique[0].boitier,
+                    "Dimensions":technique[0].Dimensions,
                     "Fiche technique" : datasheet
                 })
-                for offre in donnees["offres"]:   
+                for offre in donnees.offres or []:   
                     lignes_excel_offres.append({
                         "REF": ref,
                         "Fabricant": fab,
                         "Statut Global": consensus,
                         "Alerte Statut": f"⚠️ Conflit" if conflit else "OK",
                         "REF_Fab" : ref_fab,
-                        "Distributeur": offre.get("Distributeur", "N/A"),
-                        "Conditionnement": offre.get("Conditionnement", "N/A"),
-                        "Stock Dispo": offre.get("Stock", 0),
-                        "MOQ": offre.get("MOQ", 1),
-                        "Grille Tarifaire": offre.get("Prix_Unitaire", []),
+                        "Distributeur": offre.Distributeur or "N/A",
+                        "Conditionnement": offre.Conditionnement or "N/A",
+                        "Stock Dispo": offre.Stock or 0,
+                        "MOQ": offre.MOQ or 1,
+                        "Grille Tarifaire": offre.Prix_Unitaire or [],
                     })
         
     if lignes_excel_offres and lignes_excel_technique:
@@ -195,6 +197,7 @@ def exporter_excel(resultats:dict):
                     worksheet_offres.column_dimensions[col_letter].width = width[0]
                     worksheet_technique.column_dimensions[col_letter].width = width[1]
             processed_data = output.getvalue()
+            processed_data = base64.b64encode(processed_data).decode('utf-8')
             return processed_data
 
 
