@@ -1,0 +1,23 @@
+[
+    "https://www.digikey.fr/fr/products/filter/accessoires-de-c%C3%A2bles-de-capteurs/949",
+    "https://www.digikey.fr/fr/products/filter/accessoires-de-transducteurs-capteurs/510",
+    "https://www.digikey.fr/fr/products/filter/aimants/aimants-multi-usage/511",
+    "https://www.digikey.fr/fr/products/filter/aimants/aimants-adapt%C3%A9s-aux-capteurs/566",
+    "https://www.digikey.fr/fr/products/filter/amplificateurs-de-transducteurs-capteurs/557",
+    "https://www.digikey.fr/fr/products/filter/assemblages-de-c%C3%A2bles-de-capteurs/950",
+    "https://www.digikey.fr/fr/products/filter/capteurs-d-humidit%C3%A9/529",
+    "https://www.digikey.fr/fr/products/filter/capteurs-de-chocs/528",
+    "https://www.digikey.fr/fr/products/filter/capteurs-de-couleurs/539",
+    "https://www.digikey.fr/fr/products/filter/capteurs-industriels/capteurs-de-couleurs-industriels/1070",
+    "https://www.digikey.fr/fr/products/filter/capteurs-de-courant/525",
+    "https://www.digikey.fr/fr/products/filter/capteurs-de-d%C3%A9bit/520",
+    "https://www.digikey.fr/fr/products/filter/capteurs-industriels/capteurs-de-d%C3%A9bit-industriels/1067",
+    "https://www.digikey.fr/fr/products/filter/capteurs-de-force-cellules-de-charge/531",
+    "https://www.digikey.fr/fr/products/filter/capteurs-industriels/capteurs-de-force-cellules-de-charge-industriels/1066",
+    "https://www.digikey.fr/fr/products/filter/capteurs-de-gaz/530",
+    "https://www.digikey.fr/fr/products/filter/capteurs-de-position/mesure-de-position-lin%C3%A9aire-angulaire/549",
+    "https://www.digikey.fr/fr/products/filter/capteurs-de-poussi%C3%A8res-particules/509",
+    "https://www.digikey.fr/fr/products/filter/capteurs-de-pression-transducteurs/512",
+    "https://www.digikey.fr/fr/products/filter/capteurs-industriels/capteurs-de-pression-transducteurs-industriels/1069",
+    ""
+]
