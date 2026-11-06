@@ -1,8 +1,11 @@
 from pptx.util import Pt
+
 import math
 # ============================================================
 # AJUSTEMENT DU TEXTE
 # ============================================================
+
+
 
 def injecter_texte_auto_ajuste(placeholder, texte, taille_max=18, taille_min=7):
     """

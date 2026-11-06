@@ -333,11 +333,11 @@ def ajouter_gantt(
     nombre_semaines_phase,
     nombre_semaines_tot,
     debut_gantt,
-    x=0.60,
+    x=0.55,
     y=0.30,
     largeur=12.10,
-    hauteur=5.95,
-    largeur_libelles=3,
+    hauteur=6.1,
+    largeur_libelles=4,
 ):
     """
     Ajoute un Gantt hiérarchique entièrement éditable.
@@ -705,6 +705,16 @@ def ajouter_gantt(
         "nombre_semaines_tot": nombre_semaines_tot+nombre_semaines_phase,
         # "largeur_semaine": largeur_semaine,
     }
+
+#Définit Largeur de la colonne de gauche du Gantt : Tâches
+def largeur_libelles(lots):
+    maximum = 0
+    for lot in lots :
+        for sous_lot in lot.sous_tache:
+            maximum = max(maximum, len(sous_lot.nom ) +6)
+        maximum = max(maximum, len(lot.nom) )
+    taille = maximum/15 
+    return taille
 
 
 if __name__ == "__main__" :

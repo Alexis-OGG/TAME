@@ -2,11 +2,10 @@
 #Import modules
 from classes import *
 from tools.generate_table import dessiner_tableau_dynamique
-from tools.generate_gantt import ajouter_gantt
+from tools.generate_gantt import ajouter_gantt,largeur_libelles
 from tools.lots_handling import dessiner_documents_lot, dessiner_diagramme_lots
-from tools.feed_hypothesis import remplir_placeholder_hypotheses
-from tools.text_handling import injecter_texte_auto_ajuste
-
+from tools.feed_hypothesis import Ajouter_texte
+# from tools.text_handling import injecter_texte_auto_ajuste
 #Import librairies
 from pptx import Presentation
 from pptx.dml.color import RGBColor
@@ -32,7 +31,8 @@ def main(payload:PresentationData):
         dico[f"{index}"] = placeholder.placeholder_format.idx
 
     slide.placeholders[dico["0"]].text = payload.titre_presentation
-    #slide.placeholders[dico["1"]].insert_picture(payload.logo_client)
+    # slide.placeholders[dico["1"]].insert_picture("img/idee.png")
+    # slide.placeholders[dico["4"]].insert_picture(image1)
     slide.placeholders[dico["3"]].text = payload.nom_projet
     slide.placeholders[dico["2"]].text = "DEV-"+payload.id_projet+"-"+payload.Annee
 
@@ -43,8 +43,11 @@ def main(payload:PresentationData):
 
     #Ajout Transition
     slide = prs.slides.add_slide(prs.slide_layouts.get_by_name("Transition"))
-    for placeholder in slide.placeholders:
-        placeholder.text = "Besoin"
+    dico={}
+    for index,placeholder in enumerate(slide.placeholders):
+        dico[f"{index}"] = placeholder.placeholder_format.idx
+    slide.placeholders[dico["0"]].text =    'tt'
+    slide.placeholders[dico["1"]].text ='ttt' #image2
 
     #Ajout Besoin
     slide = prs.slides.add_slide(prs.slide_layouts.get_by_name("Besoin"))
@@ -52,9 +55,10 @@ def main(payload:PresentationData):
     for index,placeholder in enumerate(slide.placeholders):
         dico[f"{index}"] = placeholder.placeholder_format.idx
 
-    injecter_texte_auto_ajuste(slide.placeholders[dico["0"]],payload.Besoin.Avancement)
-    injecter_texte_auto_ajuste(slide.placeholders[dico["1"]],payload.Besoin.Besoin)
-    injecter_texte_auto_ajuste(slide.placeholders[dico["2"]],payload.Besoin.Role_TAME)
+    Ajouter_texte(slide.placeholders[dico["2"]],payload.Besoin.Avancement)
+    Ajouter_texte(slide.placeholders[dico["3"]],payload.Besoin.Besoin)
+    Ajouter_texte(slide.placeholders[dico["0"]],payload.Besoin.Role_TAME)
+    # slide.placeholders[dico["3"]].insert_picture("img/idee.png")
     # slide.placeholders[dico["0"]].text_frame.paragraphs[0].text = payload.Besoin.Avancement
     
     # slide.placeholders[dico["1"]].text_frame.paragraphs[0].text = payload.Besoin.Besoin
@@ -67,7 +71,7 @@ def main(payload:PresentationData):
         dico[f"{index}"] = placeholder.placeholder_format.idx
     slide.placeholders[dico["0"]].text = "Données d'entrée"
     slide.placeholders[dico["1"]].text= payload.donnees_entree
-
+    
     #Ajout les hypothèses
     for hyp in payload.hypotheses:
         slide = prs.slides.add_slide(prs.slide_layouts.get_by_name("1_Hypotheses"))
@@ -75,7 +79,7 @@ def main(payload:PresentationData):
         for index,placeholder in enumerate(slide.placeholders):
             dico[f"{index}"] = placeholder.placeholder_format.idx
         slide.placeholders[dico["0"]].text = hyp.Type_Hypothese
-        remplir_placeholder_hypotheses(slide.placeholders[dico["1"]], hyp.List_Hypotheses)
+        Ajouter_texte(slide.placeholders[dico["1"]], hyp.List_Hypotheses,nb_colonnes=2)
 
     #Ajout SOmmaire Lot
     slide = prs.slides.add_slide(prs.slide_layouts.get_by_name("Sommaire_lots"))
@@ -90,11 +94,12 @@ def main(payload:PresentationData):
             dico={}
             for index,placeholder in enumerate(slide.placeholders):
                 dico[f"{index}"] = placeholder.placeholder_format.idx
-            remplir_placeholder_hypotheses(slide.placeholders[dico["3"]], lot.details_lot)
+            Ajouter_texte(slide.placeholders[dico["3"]], lot.details_lot)
             slide.placeholders[dico["0"]].text = lot.nom
-            slide.shapes.add_picture(lot.image_lot,slide.placeholders[dico["1"]].left,slide.placeholders[dico["1"]].top,slide.placeholders[dico["1"]].width*0.85,slide.placeholders[dico["1"]].height*0.85)
-            slide.placeholders[dico["1"]].element.getparent().remove(slide.placeholders[dico["1"]].element)
+            slide.shapes.add_picture(lot.image_lot,slide.placeholders[dico["4"]].left,slide.placeholders[dico["4"]].top,slide.placeholders[dico["4"]].width*0.85,slide.placeholders[dico["4"]].height*0.85)
+            slide.placeholders[dico["4"]].element.getparent().remove(slide.placeholders[dico["4"]].element)
             dessiner_documents_lot(slide,slide.placeholders[dico["2"]],lot.documents)
+            slide.placeholders[dico["1"]].insert_picture("img/idee.png")
 
     #Ajout Transition
     slide = prs.slides.add_slide(prs.slide_layouts.get_by_name("Transition"))
@@ -112,6 +117,7 @@ def main(payload:PresentationData):
     #Ajout du Planning
     if payload.id_semaine_debut :
         debut_gantt_init= payload.id_semaine_debut
+        largeur=largeur_libelles(payload.lots_list.lots)
         #TRi des lots par phase
         tri_lots_phases = {}
         for lot in payload.lots_list.lots:
@@ -133,6 +139,7 @@ def main(payload:PresentationData):
                     nombre_semaines_tot=liste_lot["debut"],
                     nombre_semaines_phase=liste_lot["nb_semaines"]-liste_lot["debut"],
                     debut_gantt=debut_gantt_init,
+                    largeur_libelles=largeur
             )
 
 
@@ -318,8 +325,9 @@ if __name__ == "__main__" :
     import json
 
     with open(
+        "skill/format-devis/assets/PresentationData_ROBOCATH_ACU_option1.json",
+        # "input/V1.json",
         # "input/DEV-26-001521_Devis_PulsHeart_Trolley.json",
-        "input/devis_001359_rack_balayage_v2.json",
         "r",
         encoding="utf-8"
     ) as fichier:

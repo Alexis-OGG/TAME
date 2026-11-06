@@ -1,0 +1,426 @@
+{
+  "titre_presentation": "PROPOSITION TECHNIQUE & FINANCIÈRE",
+  "logo_client": "",
+  "nom_projet": "Rack de balayage V2",
+  "id_semaine_debut": 44,
+  "Annee": "2026",
+  "entreprise": "BETA BEAMS",
+  "nom_fichier": "DEV-001359-2026",
+  "donnees_entree": "Cahier des charges fonctionnel et technique\nÉchanges techniques client",
+  "Besoin": {
+    "Avancement": "BETA BEAMS a transmis un cahier des charges fonctionnel et technique décrivant l’architecture cible, les fonctions principales, les interfaces, les performances attendues et les mécanismes de sécurité du rack de balayage V2.",
+    "Besoin": "Moderniser le système de balayage des KEVAC en regroupant les fonctions électroniques et d’alimentation dans un rack unique. Le système doit recevoir les consignes de supervision, générer et amplifier les signaux de balayage, surveiller les retours aimants, détecter les anomalies et communiquer avec la supervision et l’automate de sécurité.",
+    "Role_TAME": "TAME-CARE accompagne BETA BEAMS pour consolider les spécifications, définir l’architecture et les interfaces, réaliser la conception électronique et logicielle, fabriquer le prototype A et conduire sa mise au point et sa validation fonctionnelle."
+  },
+  "hypotheses": [
+    {
+      "Type_Hypothese": "Hypothèses électroniques",
+      "List_Hypotheses": "\tLa communication numérique entre la carte principale de pilotage et les cartes de balayage/ampli pourra être réalisée via un bus SPI pour améliorer la vitesse de traitement des données.\n\tLes plans de masses seront privilégiés sur le fond de panier / Rack pour dissocier les masses signaux et puissance .\n\tLe calcul MTBF sera fait suivant la méthodologie FIDES pour l’ensemble des cartes du rack sauf pour la carte alimentation (MTBF des convertisseurs de tension fourni directement par les fabricants). \n\tLes cartes seront non vernies.\n\tLa conception mécanique détaillée du rack reste hors périmètre.\n\tAlimentations secondaires (+18Vdc, -18Vdc, +15 Vdc, -15 Vdc et +5 Vdc) fournies par la carte alimentation du rack à partir du 230Vca ou du 24 V continu suivant l’alimentation externe disponible.\nENJEUX et RISQUES:\n\tLe basculement de ligne en défaut en moins de 20ms après détection d’un défaut\n\tSupervision en temps réel\n\tDéfinition des moyens d’essai "
+    },
+    {
+      "Type_Hypothese": "Hypothèses logicielles",
+      "List_Hypotheses": "Développement logiciel\n\tDeux logiciels embarqués sont prévus : un pour la carte de pilotage et un pour la carte de balayage amplifié.\n\tAucun bootloader n’est prévu.\n\tLa gestion et le paramétrage du système sont réalisés via la liaison Ethernet.\n\tLes protocoles Ethernet et SPI sont formalisés dans un document d’interface (ICD).\n\tUn seul cycle de développement est prévu.\n\tLe manuel utilisateur n’est pas prévu ; les informations nécessaires sont intégrées au document d’interface (ICD).\n\tLa traçabilité logicielle complète n’est pas incluse.\n\tRéduction des activités au strict minimum, mais cela augmente les risques suivants : \n\t\tIncohérence des informations\n\t\tOmissions\n\t\tAjouts de fonctionnalités non nécessaires\n\t\tItération du codage\n\t\tAllongement des temps de mise au point\n\t\tMaintenabilité plus complexe\n\t\tRégressions en cas de mise à jour ou correction de bugs"
+    },
+    {
+      "Type_Hypothese": "Enjeux",
+      "List_Hypotheses": "ENJEUX et RISQUES:\n\tLe basculement de ligne en défaut en moins de 20ms après détection d’un défaut\n\tSupervision en temps réel\n\tDéfinition des moyens d’essai \n\tLa traçabilité logicielle complète n’est pas incluse.\n\tRéduction des activités au strict minimum, mais cela augmente les risques suivants : \n\t\tIncohérence des informations\n\t\tOmissions\n\t\tAjouts de fonctionnalités non nécessaires\n\t\tItération du codage\n\t\tAllongement des temps de mise au point\n\t\tMaintenabilité plus complexe\n\t\tRégressions en cas de mise à jour ou correction de bugs"
+    }
+  ],
+  "lots_list": {
+    "lots": [
+      {
+        "phase": "PHASE 1 : PROTOTYPE A",
+        "nom": "LOT 1 : Faisabilité (FR)",
+        "image_lot": "img/idee.png",
+        "details_lot": "Objectif :\n\tAcquérir et consolider les données techniques du produit existant à travers des anlyses, les mesures électriques du produit existant en vu de la phase suivante de spécification. Elle permet de valider les hypothèses du chiffrage.\nActivités :\n\tAnalyse des données d’entrée.\n\tCaractérisation du besoin et identification des points techniques ouverts.\n\tÉtude de faisabilité technique et économique.\n\tFormalisation des conclusions.",
+        "documents": {
+          "Donnees_entree": [
+            {
+              "img_doc": "img/doc_bleu.png",
+              "text_doc": "CdC client"
+            }
+          ],
+          "Livrables": [
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "Rapport FR"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "TRS préliminaire"
+            }
+          ]
+        },
+        "debut": 1,
+        "duree": 2,
+        "jalon": null,
+        "cout": 6547.13,
+        "facturation": 6547.13,
+        "sous_tache": [
+          {
+            "nom": "Analyse et mesures",
+            "duree": 1,
+            "debut": 1,
+            "jalon": null,
+            "couleur": "5377B9"
+          },
+          {
+            "nom": "Rapport de faisabilité",
+            "duree": 1,
+            "debut": 2,
+            "jalon": null,
+            "couleur": "5377B9"
+          }
+        ]
+      },
+      {
+        "phase": "PHASE 1 : PROTOTYPE A",
+        "nom": "LOT 2 : Spécification (SR)",
+        "image_lot": "img/technique.png",
+        "details_lot": "Objectif :\n\tConsolider et formaliser les exigences fonctionnelles, techniques et logicielles du système.\nActivités :\n\tÉlaboration de l’arborescence technique.\n\tRédaction de la matrice de conformité.\n\tRédaction de la TRS.\n\tInitialisation de la liste des composants critiques.\n\tDéfinition initiale de l’architecture et des plans de validation.\nHors périmètre :\n\tAnalyse de sécurité de type FMEA, SSA, FTA ou CMA.\n\tRédaction du SRD.",
+        "documents": {
+          "Donnees_entree": [
+            {
+              "img_doc": "img/doc_bleu.png",
+              "text_doc": "CdC client"
+            },
+            {
+              "img_doc": "img/doc_bleu.png",
+              "text_doc": "Données interfaces"
+            }
+          ],
+          "Livrables": [
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "TRS"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "Matrice conformité"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "LCC initiale"
+            }
+          ]
+        },
+        "debut": 3,
+        "duree": 3,
+        "jalon": null,
+        "cout": 15526.88,
+        "facturation": 15526.88,
+        "sous_tache": [
+          {
+            "nom": "TRS et conformité",
+            "duree": 2,
+            "debut": 3,
+            "jalon": null,
+            "couleur": "5377B9"
+          },
+          {
+            "nom": "Architecture initiale",
+            "duree": 1,
+            "debut": 5,
+            "jalon": null,
+            "couleur": "5377B9"
+          }
+        ]
+      },
+      {
+        "phase": "PHASE 1 : PROTOTYPE A",
+        "nom": "LOT 3 : Design Préliminaire (PDR)",
+        "image_lot": "img/design.png",
+        "details_lot": "Objectif :\n\tDéfinir l’architecture complète du rack\nActivités :\n\tDéfinition de l’architecture système Définition des interfaces Ethernet, SPI, analogiques et de sécurité.\n\tChoix des composants structurants.\nHors périmètre :\n\tDéfinition de l'architecture logicielle.",
+        "documents": {
+          "Donnees_entree": [
+            {
+              "img_doc": "img/doc_bleu.png",
+              "text_doc": "TRS"
+            },
+            {
+              "img_doc": "img/doc_bleu.png",
+              "text_doc": "Données interfaces"
+            }
+          ],
+          "Livrables": [
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "SAD"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "ICD"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "Dossiers définition"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "MTBF"
+            }
+          ]
+        },
+        "debut": 6,
+        "duree": 5,
+        "jalon": null,
+        "cout": 27271.43,
+        "facturation": 27271.43,
+        "sous_tache": [
+          {
+            "nom": "Architecture et interfaces",
+            "duree": 3,
+            "debut": 6,
+            "jalon": null,
+            "couleur": "5377B9"
+          },
+          {
+            "nom": "Choix composants",
+            "duree": 2,
+            "debut": 9,
+            "jalon": null,
+            "couleur": "5377B9"
+          }
+        ]
+      },
+      {
+        "phase": "PHASE 1 : PROTOTYPE A",
+        "nom": "LOT 4 : Design Détaillé (DDR)",
+        "image_lot": "img/design.png",
+        "details_lot": "Objectif :\n\tréaliser la conception détaillée électronique et logicielle.\nActivités :\n\tConception des schémas électroniques et nomenclatures.\n\tPlacement et routage des cartes.\n\tDéveloppement des logiciels embarqués et de test.\n\tRédaction de la fiche de description de version logicielle (SVDD)\n\tCalculs de consommation, de stress et de fiabilité.\n\tConstitution des dossiers de définition.\nHors périmètre :\n\tDéfinition de l'architecture logicielle.\n\tConception mécanique détaillée du rack.\n\tModification de la supervision et de l’automate de sécurité.",
+        "documents": {
+          "Donnees_entree": [
+            {
+              "img_doc": "img/doc_bleu.png",
+              "text_doc": "TRS"
+            },
+            {
+              "img_doc": "img/doc_bleu.png",
+              "text_doc": "ICD"
+            },
+            {
+              "img_doc": "img/doc_bleu.png",
+              "text_doc": "Données interfaces"
+            }
+          ],
+          "Livrables": [
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "SAD"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "Dossiers définition"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "MTBF"
+            }
+          ]
+        },
+        "debut": 11,
+        "duree": 25,
+        "jalon": null,
+        "cout": 171897.08,
+        "facturation": 171897.08,
+        "sous_tache": [
+          {
+            "nom": "Conception HW",
+            "duree": 10,
+            "debut": 11,
+            "jalon": null,
+            "couleur": "5377B9"
+          },
+          {
+            "nom": "CAO",
+            "duree": 10,
+            "debut": 16,
+            "jalon": null,
+            "couleur": "5377B9"
+          },
+          {
+            "nom": "Conception SW et tests",
+            "duree": 25,
+            "debut": 11,
+            "jalon": null,
+            "couleur": "5377B9"
+          },
+          {
+            "nom": "Analyses de fiabilité",
+            "duree": 5,
+            "debut": 26,
+            "jalon": null,
+            "couleur": "5377B9"
+          }
+        ]
+      },
+      {
+        "phase": "PHASE 1 : PROTOTYPE A",
+        "nom": "LOT 5 : Fabrication Proto A (AMD)",
+        "image_lot": "img/usine.png",
+        "details_lot": "Objectif :\n\tFabriquer, assembler et intégrer le prototype A.\nActivités :\n\tApprovisionnement des PCB et composants.\n\tFabrication et assemblage des cartes électroniques.\n\tContrôles électriques initiaux.\n\tProgrammation et intégration sur le fond de panier.\n\tIntégrations logicielles sur cartes.\n\tPremière mise sous tension.\n\tMise au point Hardware / Software cartes\nHors périmètre :\n\tQualification formelle du rack complet.\n\tRédaction d’un plan / procédure de test hardware.\n\tRédaction d’un plan / procédure de test logiciel.",
+        "documents": {
+          "Donnees_entree": [
+            {
+              "img_doc": "img/doc_bleu.png",
+              "text_doc": "Dossiers définition"
+            },
+            {
+              "img_doc": "img/doc_bleu.png",
+              "text_doc": "Fichiers fabrication"
+            }
+          ],
+          "Livrables": [
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "Prototype A"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "Cartes programmées"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "CRD initial"
+            }
+          ]
+        },
+        "debut": 36,
+        "duree": 7,
+        "jalon": null,
+        "cout": 34140.75,
+        "facturation": 34140.75,
+        "sous_tache": [
+          {
+            "nom": "Approvisionnement et fabrication",
+            "duree": 5,
+            "debut": 36,
+            "jalon": null,
+            "couleur": "5377B9"
+          },
+          {
+            "nom": "Intégration et mise au point",
+            "duree": 2,
+            "debut": 41,
+            "jalon": null,
+            "couleur": "5377B9"
+          }
+        ]
+      },
+      {
+        "phase": "PHASE 1 : PROTOTYPE A",
+        "nom": "LOT 6 : Validation Proto A (AVR)",
+        "image_lot": "img/technique.png",
+        "details_lot": "Objectif :\n\tMettre au point et valider fonctionnellement le prototype A.\nActivités :\n\tMise au point matérielle et logicielle des cartes.\n\tEssais fonctionnels du système sur charge représentative.\n\tFormalisation des résultats et mise à jour de la documentation.\n\tDeux semaines calendaires sans activité sont intégrées pour les congés d’août.\nHors périmètre :\n\tQualification du produit final dans sa mécanique client.\n\tManuel utilisateur.\n\tDocumentation logicielle (SVDD, CLP, CGP)",
+        "documents": {
+          "Donnees_entree": [
+            {
+              "img_doc": "img/doc_bleu.png",
+              "text_doc": "Prototype A"
+            },
+            {
+              "img_doc": "img/doc_bleu.png",
+              "text_doc": "TRS et ICD"
+            }
+          ],
+          "Livrables": [
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "VTR"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "ATP"
+            }
+          ]
+        },
+        "debut": 43,
+        "duree": 5,
+        "jalon": null,
+        "cout": 31288.95,
+        "facturation": 31288.95,
+        "sous_tache": [
+          {
+            "nom": "Validation cartes et ensemble",
+            "duree": 5,
+            "debut": 43,
+            "jalon": null,
+            "couleur": "8EA8D4"
+          }
+        ]
+      },
+      {
+        "phase": "PHASE 2 : VALIDATION EXTERNE",
+        "nom": "LOT 7 : Mise au point chez BETA BEAMS",
+        "image_lot": "img/technique.png",
+        "details_lot": "Objectif :\n\tValider fonctionnellement le nouveau rack équipé chez BETA BEAMS  \nActivités :\n\tTest final fonctionnel sur système complet chez BETA BEAMS\n\tTest de l’interface avec la supervision et via l’Ethernet\n\tTest de l’interface avec l’automate de sécurité\n\tVérifier le pilotage, la charge (aimant) et les retours mesures",
+        "documents": {
+          "Donnees_entree": [
+            {
+              "img_doc": "img/doc_bleu.png",
+              "text_doc": "Prototype validé"
+            },
+            {
+              "img_doc": "img/doc_bleu.png",
+              "text_doc": "Dossier essais"
+            }
+          ],
+          "Livrables": [
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "Rapport externe"
+            }
+          ]
+        },
+        "debut": 48,
+        "duree": 5,
+        "jalon": null,
+        "cout": 21520.8,
+        "facturation": 21520.8,
+        "sous_tache": [
+          {
+            "nom": "Essais sur site",
+            "duree": 5,
+            "debut": 48,
+            "jalon": null,
+            "couleur": "8EA8D4"
+          }
+        ]
+      },
+      {
+        "phase": "PHASE 2 : VALIDATION EXTERNE",
+        "nom": "LOT 8 : Validation Proto Q (QVR)",
+        "image_lot": "img/technique.png",
+        "details_lot": "Objectif : Réaliser la validation du prototype Q.\nActivités : Les activités détaillées ne sont pas précisées dans le devis source.\nHors périmètre : non précisé.",
+        "documents": {
+          "Donnees_entree": [
+            {
+              "img_doc": "img/doc_bleu.png",
+              "text_doc": "Prototype Q"
+            }
+          ],
+          "Livrables": [
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "Validation Proto Q"
+            }
+          ]
+        },
+        "debut": 53,
+        "duree": 1,
+        "jalon": null,
+        "cout": 5400,
+        "facturation": 5400,
+        "sous_tache": [
+          {
+            "nom": "Validation Proto Q",
+            "duree": 1,
+            "debut": 53,
+            "jalon": null,
+            "couleur": "8EA8D4"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,285 @@
+{
+  "titre_presentation": "PROPOSITION TECHNIQUE & FINANCIÈRE",
+  "logo_client": "",
+  "nom_projet": "Gestion d’obsolescence de l’ACU",
+  "id_semaine_debut": 40,
+  "Annee": "2026",
+  "entreprise": "ROBOCATH",
+  "nom_fichier": "DEV-001024_03-2026",
+  "donnees_entree": "CDCT reprise ACU RD-045-260608-00-00LV-CdCst\nAjustements de la visioconférence technique du 24/09/2026\nCahier des charges mis à jour \nDeux options sont chiffrées à la demande de Robocath : avec ou sans changementde matière du carter",
+  "Besoin": {
+    "Avancement": "ROBOCATH a transmis un cahier des charges pour gérer l’obsolescence de l’ACU R2 précédemment développée par TRONICO. Des échanges par fichier questions-réponses  ont ensuite permis de compléter la description du besoin.",
+    "Besoin": "L’objectif est de reprendre la conception de l’ACU afin de remplacer les composants obsolètes et d’intégrer de nouvelles fonctionnalités ayant été détectées pendant les phases de validation pré-clinique de la version précédente.",
+    "Role_TAME": "ROBOCATH sollicite Tronico Tame-Care pour l’accompagner dans les différentes étapesd’une reprise de conception(HW,Mécanique, firmware), conforme aux règles de développement et de fabrication d’un dispositif médical."
+  },
+  "hypotheses": [
+    {
+      "Type_Hypothese": "Hypothèses électroniques et logicielles",
+      "List_Hypotheses": "Architecture électronique \n\t L’architecture électronique reste dans la continuité de celle du projet ACU historique \n\t Les changements de micro PRINC et SURV, ainsi que les portages logiciels associés sont considérés simples puisqu'ils ne changent pas de famille, mais un temps de vérification est néanmoins nécessaire \n\t Afin de limiter l’impact du changement d’écran sur le routage de la carte, l’ajout d’une carte d’interface est prévu pour faciliter l’adaptation aux nouvelles positions des nappes de l’écran et de la dalle tactile \nLogiciel \n\t Adaptation des drivers et des middlewares des microcontrôleurs pour la gestion tactile/affichage, capteur de température, mesure du courant LEDs, ainsi que la mise à jour des protocoles de communication et gestion des modes dans l’objectif des essais VTPR \n\t Le nouveau capteur de température n'est pas mis en œuvre par le logiciel \nEcran tactile \n\t Pour le remplacement de l’écran tactile obsolète, cette proposition repose sur l’hypothèse de l’intégration d’un écran tout-en-un comprenant l’afficheur et la dalle tactile. Dans le cas où une solution spécifique nécessiterait l’intégration d’une dalle tactile sur un écran ainsi que sa calibration, l’effort associé devra être évalué \n\t Reprise de l’Interface graphique (IHM) et des drivers associés pour les tests du système \nAlimentation \n\t Les consommations sont considérées équivalentes à celles du produit historique et compatibles avec les changements demandés. Un temps de vérification (calcul de conso) est néanmoins pris en compte, aucun ajustement des alimentations n’est prévu, hors passifs. \nAnalyses composants \n\t Une analyse des différentes nomenclatures est prévue afin de prendre en compte les évolutions et les éventuelles obsolescences composants. Cette analyse est basée sur l’hypothèse qu’aucune action majeure ne sera nécessaire sur les composants complexes. Dans le cas contraire, l’effort associé devra être évalué. \n\t Le remplacement des composants complexes dont les analyses environnementales montrent une nonconformité ne sont pas pris en compte dans ce chiffrage \nQualifaition \n\t La phase qualification n’est pas comprise dans ce chiffrage \nDocumentation \n\t Adaptation des documents historiques nécessaires à la traçabilité (TRS, DPD, VTP, RVM), sans traduction en anglais \n\t Adaptation des autres documents historiques limitée (uniquement ceux indispensables à la conception) "
+    },
+    {
+      "Type_Hypothese": "Hypothèses mécaniques",
+      "List_Hypotheses": "Redesign mécanique de l’ACU :\n\t La forme extérieure de l’ACU, l’inclinaison de l’écran, la position des joysticks et de l’arrêt d’urgence seront identiques par rapport à l’ACU actuelle. De l’extérieur seuls certains boutons seront supprimés et la matière des vis du connecteur de l’ACU modifiée.\nChangement de matière du carter :\n\t La matière actuelle de l’ACU,  la résine 8263, ne permet pas de passer l’essai de la bille chaude de la norme IEC 60601-1 du fait d’une température de fléchissement trop faible, mais l’essai bille froide est réussi. La résine PX331 peut passer l’essai bille chaude mais est à l’inverse plus cassante. \n\t Des workshops tripartites entre Tronico, Robocath et le fabricant du carter seront organisés pour trouver une matière et un process capable de passer les essais bille chaude et bille froide de la norme IEC 60601-1. Les résultats des simulations effectués précédemment sur l’ancien design de l’ACU seront utilisés pour compléter ces échanges. La réalisation de nouvelles simulations n’est pas prévue dans ce chiffrage. \n\t Nota : à la demande de Robocath, le changement de matière a été retiré du devis Option 2.\nEssais bille froide et chaude sur carter :\n\t A la suite du redesign de l’ACU, un ensemble mécanique carter et fond de boitier sera fabriqué pour valider l'essai de la bille froide, cet essai sera réalisé chez Tronico. L'essai bille chaude sera réalisé chez Robocath sur un échantillon de matière que Robocath se procurera. La phase de qualification n’est pas comprise dans ce chiffrage.\n\t Nota : à la demande de Robocath, la fabrication du carter et l’essai bille froide ont été retirés du devis Option 2.\nContrainte de maintenabilité :\n\t TRONICO veillera à ce que l'ajout des ferrites, le remplacement de l'écran et l'ajout de la carte interface n'impacte pas négativement la maintenabilité de l'ACU actuel."
+    },
+    {
+      "Type_Hypothese": "Enjeux et risques techniques",
+      "List_Hypotheses": "\n\t Cadrer les spécifications (ajuster les contraintes historiques au produit réel historique, ajouter les nouvelles contraintes) et assurer la traçabilité, en supprimant les exigences historiques incomplètes\n\t Intégrer un écran tactile supportant les niveaux ESD requis, avec des interfaces minimisant les impacts physiques, électriques et logiciel\n\t Minimiser les impacts (calendaire et financier) du remplacement des composants complexes historiques ayant des statuts KO pour les contraintes de pérennité, de température, d’humidité, REACH ou RoHS\n\t L’AMDEC achat est prévue lors de la phase de spécification sur la base des BOM historiques et des évolutions demandées pour avoir un statut global le plus tôt possible."}
+  ],
+  "lots_list": {
+    "lots": [
+      {
+        "phase": "PHASE 1 : PROTOTYPE A",
+        "nom": "LOT 1 : Spécification Technique (SR)",
+        "image_lot": "img/technique.png",
+        "details_lot": "Objectif :\n\t Consolider les données d’entrée afin d’adapter les spécifications dudispositif historique selon vos nouveaux besoins. \n\t Avoir le statut global des composants du produit historique avec prise en compte des évolutions demandées.\nActivités : \n\t Cahier des charges techniques (TRS)\n\t Analyse et prise en compte des demandes d’évolutions (CR Change requests) non implémentées sur le prototype existant. Les demandes de statuer les TBC/TBD historiques sont exclues\n\t AMDEC achat global du produit (LCC)\n\t Initialiser le nouveau plan de test (VTP)\n\t Matrice de traçabilité (RVM)",
+        "documents": {
+          "Donnees_entree": [
+            {
+              "img_doc": "img/doc_bleu.png",
+              "text_doc": "DONNÉES TECHNIQUES"
+            }
+          ],
+          "Livrables": [
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "CDC TECHNIQUE (TRS)"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "AMDEC ACHAT(LCC)"
+            }
+          ]
+        },
+        "debut": 1,
+        "duree": 4,
+        "jalon": null,
+        "cout": 14174,
+        "facturation": 9922,
+        "sous_tache": [
+          {
+            "nom": " AMDEC Achat, TRS, RVM",
+            "duree": 4,
+            "debut": 1,
+            "jalon": null,
+            "couleur": "5377B9"
+          }
+        ]
+      },
+      {
+        "phase": "PHASE 1 : PROTOTYPE A",
+        "nom": "LOT 2 : Design Préliminaire (PDR)",
+        "image_lot": "img/design.png",
+        "details_lot": "Objectif :\n\t Mise à jour de l’architecture et des interfaces du dispositif en vue de sa conception. Un premier modèle 3D sera élaboré afin de lancer les premiers essais mécaniques.\nActivités :\n\t Définition des architectures et interfaces matériel et logiciel\n\t Workshop Tronico, Robocath & Sous\tTraitant (hors option 2)\n\t Conception préliminaire mécanique (E3D) \n\t\tChangement matière carter (hors option 2), IEC 60601, modification des fonctions produits\n\t Lancement de la fabrication de 1 carter + 1 fond pour les tests des billes (hors option 2)",
+        "documents": {
+          "Donnees_entree": [
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "CdC technique (TRS)"
+            }
+          ],
+          "Livrables": [
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "Step 3D préliminaire"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "CR workshop(hors option 2)"
+            }
+          ]
+        },
+        "debut": 5,
+        "duree": 9,
+        "jalon": null,
+        "cout": 28240,
+        "facturation": 19768,
+        "sous_tache": [
+          {
+            "nom": "WS, Analyse produit actuel",
+            "duree": 4,
+            "debut": 5,
+            "jalon": null,
+            "couleur": "5377B9"
+          },
+          {
+            "nom": "Architecture, interfaces et conception mécanique",
+            "duree": 5,
+            "debut": 9,
+            "jalon": null,
+            "couleur": "5377B9"
+          }
+        ]
+      },
+      {
+        "phase": "PHASE 1 : PROTOTYPE A",
+        "nom": "LOT 3 : Design Détaillé (DDR)",
+        "image_lot": "img/design.png",
+        "details_lot": "Objectif : \n\tRéaliser la conception détaillée du dispositif et constituer un dossier de définition permettant la fabrication\nActivités :\n\tCampagne d’essais de bille sur les nouvelles coques (hors option 2)\n\t\tTest avec bille froide chez Tronico et  test avec bille chaude chez Robocath\n\tConception électronique\n\t\tschéma électronique, spécification routage & PCB, DFM PCB\n\t\tRoutage des deux cartes\n\tConception logiciel pour les tests des produits\n\t\tDéveloppement du logiciel embarqué (driver, middleware)\n\t\tDéveloppement de l’IHM de test\n\tConception mécanique\n\t\tModélisation mécanique 3D et mise en plans\n\tDossier de justification (DPD)\n\tDossier de fabrication (DF)\n\t\tGerbers, nomenclatures, \n\t\tPlans mécanique, câblage, plan d’assemblage/d’ensemble\n\tMise à jour du plan de test (VTP)",
+        "documents": {
+          "Donnees_entree": [
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "CdC technique (TRS)"
+            }
+          ],
+          "Livrables": [
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "Schéma/ BOM Elec"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "Step 3D mécanique"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "Justification de conception (DPD)"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "Dossier de fabrication (DF)"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "1 carter préliminaire pour l'essai bille froide chez Tame-Care(hors option 2)"
+            }
+          ]
+        },
+        "debut": 14,
+        "duree": 9,
+        "jalon": null,
+        "cout": 84481,
+        "facturation": 59137,
+        "sous_tache": [
+          {
+            "nom": "Essais des billes",
+            "duree": 6,
+            "debut": 14,
+            "jalon": null,
+            "couleur": "5377B9"
+          },
+          {
+            "nom": "Conception Meca",
+            "duree": 6,
+            "debut": 14,
+            "jalon": null,
+            "couleur": "5377B9"
+          },
+          {
+            "nom": "Conception HW et SW",
+            "duree": 9,
+            "debut": 14,
+            "jalon": null,
+            "couleur": "5377B9"
+          },
+          {
+            "nom": "Dossiers justification et fabrication",
+            "duree": 4,
+            "debut": 19,
+            "jalon": null,
+            "couleur": "5377B9"
+          }
+        ]
+      },
+      {
+        "phase": "PHASE 1 : PROTOTYPE A",
+        "nom": "LOT 4 : Fabrication des Prototypes",
+        "image_lot": "img/usine.png",
+        "details_lot": "Objectif : \n\tRéaliser la production des prototypes (partiels et complets) conformément au dossier de fabrication.\nActivités :\n\tRevue de lancement fabrication \n\tSuivi de production (approvisionnement, réception, contrôle, câblage…)\n\tMontage des prototypes (Intégration/Assemblage/Câblage)\n\tMise au point des sous systèmes ainsi que des ensembles\n\tChange RequestDocument (CRD)",
+        "documents": {
+          "Donnees_entree": [
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "Dossier de fabrication (DF)"
+            }
+          ],
+          "Livrables": [
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "3 PCBA (carte principale + carte interface écran)"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "1 ensemble (Ecran + alimentation + cable)"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "2 ensembles complets ACU"
+            }
+          ]
+        },
+        "debut": 23,
+        "duree": 9,
+        "jalon": null,
+        "cout": 47733,
+        "facturation": 33413,
+        "sous_tache": [
+          {
+            "nom": "Approvisionnement et fabrication",
+            "duree": 7,
+            "debut": 23,
+            "jalon": null,
+            "couleur": "5377B9"
+          },
+          {
+            "nom": "Mise au point",
+            "duree": 2,
+            "debut": 30,
+            "jalon": null,
+            "couleur": "5377B9"
+          }
+        ]
+      },
+      {
+        "phase": "PHASE 1 : PROTOTYPE A",
+        "nom": "LOT 5 : Vérification des Prototypes (VR)",
+        "image_lot": "img/technique.png",
+        "details_lot": "Objectif : \n\tVérifier la conformité du prototype avec les spécifications techniques du dispositif.\nActivités :\n\tFinalisation de la mise au point de l’ensemble\n\tValidation Test Report (VTR)\n\tChange RequestDocument (CRD)\n\tMise à jour et dérouler les tests récurrents (checklist de vérification)",
+        "documents": {
+          "Donnees_entree": [
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "Cartes / Ensembles Produits"
+            }
+          ],
+          "Livrables": [
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "Rapports de Test (VTR)"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "Rapports des Tests récurrents"
+            },
+            {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "Matrice de traçabilité (RVM)"
+            },
+                        {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "Logiciel de test (IHM)"
+            },
+                        {
+              "img_doc": "img/doc_orange.png",
+              "text_doc": "Cartes / Ensembles testés"
+            }
+          ]
+        },
+        "debut": 32,
+        "duree": 3,
+        "jalon": null,
+        "cout": 11999,
+        "facturation": 8399,
+        "sous_tache": [
+          {
+            "nom": "Tests, traçabilité",
+            "duree": 3,
+            "debut": 32,
+            "jalon": null,
+            "couleur": "8EA8D4"
+          }
+        ]
+      }
+    ]
+  }
+}
